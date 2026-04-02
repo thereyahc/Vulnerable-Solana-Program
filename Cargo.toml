@@ -1,0 +1,17 @@
+[package]
+name = "vulnerable_smart_contract"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+borsh = "0.10.3"
+solana-program = "1.18.0"
+
+[dev-dependencies]
+borsh = "0.10.3"
+solana-program-test = "1.18.0"
+solana-sdk = "1.18.0"
+tokio = { version = "1", features = ["full"] }
