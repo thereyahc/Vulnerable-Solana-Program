@@ -1,0 +1,27 @@
+name: Lablace Security Audit
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Zip Repository
+        run: zip -r repo.zip . -x "*.git*"
+
+      - name: Send to Lablace Auditor
+        env:
+          LABLACE_API_KEY: ${{ secrets.LABLACE_API_KEY }}
+        run: |
+          curl -X POST "https://attic-motto-papaya.ngrok-free.dev/api/projects/upload-ci" \
+            -H "Authorization: Bearer $LABLACE_API_KEY" \
+            -H "ngrok-skip-browser-warning: true" \
+            -F "name=${{ github.event.repository.name }}" \
+            -F "file=@repo.zip"
