@@ -126,7 +126,7 @@ fn transaction(_program_id: &Pubkey, accounts: &[AccountInfo], amount: u64) -> P
     let authority = next_account_info(account_iter)?;
     let destination = next_account_info(account_iter)?;
     let _system_program = next_account_info(account_iter)?;
-
+    
     // Missing Signer Check
     // Anyone can steal lamports in vault by passing any public key as the authority without holding its private key,
     // since the program never checks that the authority signed the transaction.
@@ -216,7 +216,7 @@ fn transaction_underflow(
     **destination.try_borrow_mut_lamports()? += amount;
 
     println!(
-        "Underflow vulnerability. Transferred lamports {}. Vault balance: {}",
+        "Underflow vulnerability found. Transferred lamports {}. Vault balance: {}",
         amount, vault_data.balance
     );
     Ok(())
